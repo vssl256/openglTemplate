@@ -4,22 +4,16 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class File {
-    private static final String RESOURCES_DIR = "src/main/resources/";
-    private static final String SHADERS_DIR = RESOURCES_DIR + "shaders/";
-    private static final String TEXTURES_DIR = RESOURCES_DIR + "textures/";
+    private static final String SHADERS_DIR = "src/main/resources/shaders/";
 
     private final java.io.File file;
     private final FileTypes fileType;
     private long lastModified;
 
-    public File( FileTypes fileType , String name, FileExtensions extension ) {
+    public File( FileTypes fileType , String name, String extension ) {
         this.fileType = fileType;
-        file = new java.io.File( getFileTypeDir( name ) + "." + extension.name() );
+        file = new java.io.File( getFileTypeDir( name ) + "." + extension );
         lastModified = file.lastModified();
-    }
-
-    public String getPath() {
-        return file.getPath();
     }
 
     public String read() {
@@ -41,7 +35,6 @@ public class File {
     private String getFileTypeDir( String name ) {
         return switch ( fileType ) {
             case SHADER -> SHADERS_DIR + name + "/shader";
-            case TEXTURE -> TEXTURES_DIR + name;
         };
     }
 }
